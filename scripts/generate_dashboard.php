@@ -1,0 +1,179 @@
+<?php
+/**
+ * ProFactory - Server Dashboard Generator
+ * Generates an ultra-premium HTML dashboard with live HTTPS QR codes and user credentials.
+ */
+
+$publicUrl = isset($argv[1]) && !empty($argv[1]) ? trim($argv[1]) : 'http://localhost:8000';
+$localPort = 8000;
+
+// Try to get local network IP
+$localIp = '127.0.0.1';
+$hostIp = gethostbyname(gethostname());
+if ($hostIp && $hostIp !== '127.0.0.1') {
+    $localIp = $hostIp;
+}
+$localUrl = "http://{$localIp}:{$localPort}";
+
+// Try to fetch users from database
+$users = [];
+try {
+    require_once dirname(__DIR__) . '/vendor/autoload.php';
+    $app    = require_once dirname(__DIR__) . '/bootstrap/app.php';
+    $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
+    $kernel->bootstrap();
+
+    $rows = \Illuminate\Support\Facades\DB::table('users')
+        ->leftJoin('model_has_roles', function ($j) {
+            $j->on('users.id', '=', 'model_has_roles.model_id')
+              ->where('model_has_roles.model_type', 'App\Models\User');
+        })
+        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->select('users.name', 'users.email', 'roles.name as role')
+        ->get();
+
+    foreach ($rows as $r) {
+        $users[] = [
+            'name'  => $r->name,
+            'email' => $r->email,
+            'role'  => $r->role ?? 'مستخدم',
+        ];
+    }
+} catch (\Throwable $e) {
+    $users = [
+        ['name' => 'المدير العام', 'email' => 'admin@profactory.local', 'role' => 'Admin'],
+    ];
+}
+
+$passwords = [
+    'admin@profactory.local' => '123456',
+];
+
+$publicQR = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' . rawurlencode($publicUrl);
+$localQR  = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' . rawurlencode($localUrl);
+$chatQR   = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' . rawurlencode($publicUrl . '/chat');
+
+$usersRows = '';
+foreach ($users as $u) {
+    $pass     = isset($passwords[$u['email']]) ? $passwords[$u['email']] : '123456';
+    $roleName = $u['role'];
+    $roleIcon = ($roleName === 'Admin') ? '👑 مدير النظام' : '👤 ' . $roleName;
+
+    $usersRows .= '<tr>'
+        . '<td class="fw-bold">' . htmlspecialchars($u['name'], ENT_QUOTES, 'UTF-8') . '</td>'
+        . '<td dir="ltr" class="text-start">' . htmlspecialchars($u['email'], ENT_QUOTES, 'UTF-8') . '</td>'
+        . '<td><code>' . htmlspecialchars($pass, ENT_QUOTES, 'UTF-8') . '</code></td>'
+        . '<td><span class="badge bg-orange">' . $roleIcon . '</span></td>'
+        . '</tr>';
+}
+
+$html = '<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏭 مصنع أقفاص العصافير — سيرفر التشغيل المباشر</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Tajawal",sans-serif;background:linear-gradient(135deg,#0a0e17,#1a1f35,#0f172a);min-height:100vh;color:#f8fafc;padding:30px 20px}
+.container{max-width:1100px;margin:0 auto}
+.header{text-align:center;margin-bottom:35px}
+.header h1{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,#f97316,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.header p{color:#94a3b8;font-size:1.05rem}
+.dot{display:inline-block;width:12px;height:12px;background:#22c55e;border-radius:50%;box-shadow:0 0 12px #22c55e;animation:pulse 1.5s infinite;margin-left:8px;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(0.85)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:24px;margin-bottom:32px}
+.card{background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:26px;text-align:center;backdrop-filter:blur(16px);transition:all .25s ease;box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+.card:hover{transform:translateY(-6px);border-color:rgba(249,115,22,0.4);box-shadow:0 14px 40px rgba(249,115,22,0.15)}
+.card h2{font-size:1.25rem;color:#f97316;margin-bottom:12px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px}
+.url-badge{display:block;font-size:.85rem;color:#93c5fd;word-break:break-all;background:rgba(59,130,246,.12);padding:10px 14px;border-radius:10px;margin-bottom:18px;text-decoration:none;border:1px solid rgba(59,130,246,.25);direction:ltr;font-family:monospace;font-weight:700}
+.url-badge:hover{background:rgba(59,130,246,.25);color:#fff}
+.qr-wrapper{background:#fff;padding:12px;border-radius:16px;display:inline-block;box-shadow:0 8px 20px rgba(0,0,0,0.25);margin-bottom:16px}
+.qr-wrapper img{display:block;border-radius:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;padding:12px 30px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.95rem;box-shadow:0 4px 18px rgba(234,88,12,.4);transition:all .2s ease}
+.btn:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(234,88,12,.6);color:#fff}
+.btn-green{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 18px rgba(34,197,94,.35)}
+.btn-green:hover{box-shadow:0 6px 24px rgba(34,197,94,.5)}
+.section{background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:26px;margin-bottom:24px;backdrop-filter:blur(16px)}
+.section h2{font-size:1.25rem;color:#fbbf24;margin-bottom:18px;font-weight:800}
+table{width:100%;border-collapse:collapse}
+th{background:rgba(249,115,22,.15);padding:14px 16px;text-align:right;font-size:.9rem;color:#f97316;border-bottom:1px solid rgba(249,115,22,.3)}
+td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.95rem}
+tr:hover td{background:rgba(255,255,255,.03)}
+code{background:rgba(34,197,94,.15);color:#86efac;padding:4px 12px;border-radius:8px;font-family:monospace;font-weight:700;border:1px solid rgba(34,197,94,.25);font-size:.95rem}
+.badge{padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700}
+.bg-orange{background:rgba(249,115,22,.2);color:#fb923c;border:1px solid rgba(249,115,22,.3)}
+.footer{text-align:center;color:#64748b;font-size:.85rem;margin-top:24px}
+.time{color:#22c55e;font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🏭 نظام إدارة وتتبع مصنع أقفاص العصافير</h1>
+    <p><span class="dot"></span> السيرفر يعمل بكفاءة وأمان عالي (HTTPS) &bull; <span class="time" id="clk"></span></p>
+  </div>
+
+  <div class="cards">
+    <!-- Card 1: Global HTTPS (Mobile / Internet) -->
+    <div class="card">
+      <h2>🌐 رابط الموبايل والإنترنت (HTTPS)</h2>
+      <a class="url-badge" href="' . $publicUrl . '" target="_blank">' . $publicUrl . '</a>
+      <div class="qr-wrapper">
+        <img src="' . $publicQR . '" alt="QR Global" width="200" height="200">
+      </div>
+      <br>
+      <a class="btn" href="' . $publicUrl . '" target="_blank">🚀 فتح النظام في المتصفح</a>
+    </div>
+
+    <!-- Card 2: WhatsApp Chat Direct -->
+    <div class="card">
+      <h2>💬 شات الإدارة الفوري (واتساب)</h2>
+      <a class="url-badge" href="' . $publicUrl . '/chat" target="_blank">' . $publicUrl . '/chat</a>
+      <div class="qr-wrapper">
+        <img src="' . $chatQR . '" alt="QR Chat" width="200" height="200">
+      </div>
+      <br>
+      <a class="btn btn-green" href="' . $publicUrl . '/chat" target="_blank">📱 فتح شات المسؤولين</a>
+    </div>
+
+    <!-- Card 3: Local Network (Wi-Fi) -->
+    <div class="card">
+      <h2>💻 الشبكة الداخلية (Wi-Fi)</h2>
+      <a class="url-badge" href="' . $localUrl . '" target="_blank">' . $localUrl . '</a>
+      <div class="qr-wrapper">
+        <img src="' . $localQR . '" alt="QR Local" width="200" height="200">
+      </div>
+      <br>
+      <a class="btn" href="' . $localUrl . '" target="_blank">🖥️ فتح الرابط الداخلي</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>👥 حسابات وبيانات دخول المسؤولين</h2>
+    <table>
+      <thead><tr>
+        <th>الاسم</th>
+        <th class="text-start">البريد الإلكتروني</th>
+        <th>كلمة السر الافتراضية</th>
+        <th>نوع الصلاحية</th>
+      </tr></thead>
+      <tbody>' . $usersRows . '</tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    تم إنشاء لوحة التحكم تلقائياً &bull; مصنع أقفاص العصافير &bull; جميع الحقوق محفوظة 2026
+  </div>
+</div>
+<script>
+function upd(){document.getElementById("clk").textContent=new Date().toLocaleString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"});}
+upd();setInterval(upd,1000);
+</script>
+</body>
+</html>';
+
+$out = dirname(__DIR__) . '/scripts/server_dashboard.html';
+file_put_contents($out, $html);
+echo $out;

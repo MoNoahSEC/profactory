@@ -1,0 +1,70 @@
+{
+    "name": "مصنع سالم علي - النظام الذكي",
+    "short_name": "مصنع سالم علي",
+    "description": "نظام إدارة المصنع الذكي - الفواتير، العمال، والخزينة",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "background_color": "#f8fafc",
+    "theme_color": "#ea580c",
+    "orientation": "any",
+    "lang": "ar",
+    "dir": "rtl",
+    "scope": "/",
+    "categories": ["business", "productivity"],
+    "icons": [
+        {
+            "src": "/icons/icon-72.png",
+            "type": "image/png",
+            "sizes": "72x72",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-96.png",
+            "type": "image/png",
+            "sizes": "96x96",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-128.png",
+            "type": "image/png",
+            "sizes": "128x128",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-384.png",
+            "type": "image/png",
+            "sizes": "384x384",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "الفواتير",
+            "short_name": "الفواتير",
+            "description": "إدارة الفواتير",
+            "url": "/invoices",
+            "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "العمال",
+            "short_name": "العمال",
+            "description": "إدارة العمال والرواتب",
+            "url": "/workers",
+            "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+        }
+    ],
+    "screenshots": [],
+    "prefer_related_applications": false
+}
