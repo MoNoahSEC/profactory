@@ -1,1 +1,2 @@
-*.sqlite*
+# Allow main production database
+!database.sqlite

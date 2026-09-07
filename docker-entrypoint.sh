@@ -23,10 +23,9 @@ if [ -z "$APP_KEY" ]; then
     export APP_KEY="base64:ld6xo8H/AACNFTL+N88N1ilIDzubxGvJtK4MSCDL//U="
 fi
 
-# Run migrations, seeds, and clear caches
+# Run migrations and clear caches (keep real data intact)
 php artisan storage:link --force || true
 php artisan migrate --force || true
-php artisan db:seed --force || true
 php artisan config:clear || true
 php artisan route:clear || true
 php artisan view:clear || true
