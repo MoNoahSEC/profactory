@@ -27,7 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
         );
         // Keep CSRF protection enabled. Tunnels and reverse proxies do not
         // require disabling it; forms and AJAX requests already carry a token.
-        $middleware->append(\App\Http\Middleware\AutoLogin::class);
         $middleware->append(\App\Http\Middleware\GzipMiddleware::class);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('dashboard'));

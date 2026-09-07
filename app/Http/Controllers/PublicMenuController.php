@@ -79,11 +79,11 @@ class PublicMenuController extends Controller
             ];
 
             // ─── 1. Ensure repo exists ───────────────────────────────────────
-            $repoCheck = Http::withoutVerifying()->timeout(30)->withHeaders($headers)
+            $repoCheck = Http::timeout(30)->withHeaders($headers)
                 ->get("{$apiBase}/repos/{$username}/{$repoName}");
 
             if ($repoCheck->status() === 404) {
-                $createRepo = Http::withoutVerifying()->timeout(30)->withHeaders($headers)
+                $createRepo = Http::timeout(30)->withHeaders($headers)
                     ->post("{$apiBase}/user/repos", [
                         'name'        => $repoName,
                         'description' => 'ProFactory Public Menu',
@@ -97,7 +97,7 @@ class PublicMenuController extends Controller
                 }
                 sleep(3);
 
-                Http::withoutVerifying()->timeout(30)->withHeaders($headers)
+                Http::timeout(30)->withHeaders($headers)
                     ->post("{$apiBase}/repos/{$username}/{$repoName}/pages", [
                         'source' => ['branch' => 'main', 'path' => '/'],
                     ]);
@@ -105,7 +105,7 @@ class PublicMenuController extends Controller
 
             // ─── 2. Fetch existing repo tree to avoid duplicate uploads ──────
             $existingFiles = [];
-            $treeResponse = Http::withoutVerifying()->timeout(30)->withHeaders($headers)
+            $treeResponse = Http::timeout(30)->withHeaders($headers)
                 ->get("{$apiBase}/repos/{$username}/{$repoName}/git/trees/main?recursive=1");
 
             if ($treeResponse->successful()) {
@@ -151,7 +151,7 @@ class PublicMenuController extends Controller
                     $putPayload['sha'] = $existingFiles[$ghPath]; // Update existing
                 }
 
-                $uploadImg = Http::withoutVerifying()->timeout(60)->withHeaders($headers)
+                $uploadImg = Http::timeout(60)->withHeaders($headers)
                     ->put("{$apiBase}/repos/{$username}/{$repoName}/contents/{$ghPath}", $putPayload);
 
                 if ($uploadImg->successful()) {
@@ -180,12 +180,12 @@ class PublicMenuController extends Controller
             ];
             if ($sha) $uploadPayload['sha'] = $sha;
 
-            $upload = Http::withoutVerifying()->timeout(120)->withHeaders($headers)
+            $upload = Http::timeout(120)->withHeaders($headers)
                 ->put("{$apiBase}/repos/{$username}/{$repoName}/contents/index.html", $uploadPayload);
 
             if ($upload->successful()) {
                 // Ensure Pages is activated now that branch 'main' exists
-                $pagesCheck = Http::withoutVerifying()->timeout(30)->withHeaders($headers)
+                $pagesCheck = Http::timeout(30)->withHeaders($headers)
                     ->post("{$apiBase}/repos/{$username}/{$repoName}/pages", [
                         'source' => ['branch' => 'main', 'path' => '/'],
                     ]);

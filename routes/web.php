@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 
-Route::get('/debug-db', function () {
-    return 'Customers: ' . \App\Models\Customer::count() . ' - DB: ' . config('database.connections.sqlite.database');
-});
-
 // --- ROOT ROUTE REDIRECT ---
 Route::get('/', function () {
     if (auth()->check()) {
@@ -31,15 +27,6 @@ Route::post('/alerts/{alert}/read', function (\App\Models\SystemAlert $alert) {
     $alert->update(['is_read' => true]);
     return back();
 })->name('alerts.read')->middleware('auth');
-
-Route::get('/dev/migrate', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return \Illuminate\Support\Facades\Artisan::output();
-    } catch (\Exception $e) {
-        return $e->getMessage();
-    }
-});
 
 Route::middleware(['auth'])->group(function () {
 

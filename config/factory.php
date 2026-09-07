@@ -1,8 +1,6 @@
 <?php
 
 return [
-    /* Enables the temporary local demo account. Never enable in production. */
-    'auto_login' => env('AUTO_LOGIN_ENABLED', false),
     /*
     |--------------------------------------------------------------------------
     | نسبة تكلفة العمالة من تكلفة الخامات
