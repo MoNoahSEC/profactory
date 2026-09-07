@@ -49,11 +49,11 @@
                     </td>
                     <td class="text-center">
                         @if($tx->record_type === 'advance')
-                            <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning px-3"><i class="bi bi-cash-coin me-1"></i> سلفة</span>
+                            <span class="badge badge-warning rounded-pill px-3"><i class="bi bi-cash-coin me-1"></i> سلفة</span>
                         @elseif($tx->record_type === 'penalty')
-                            <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger px-3"><i class="bi bi-exclamation-triangle me-1"></i> خصم</span>
+                            <span class="badge badge-danger rounded-pill px-3"><i class="bi bi-exclamation-triangle me-1"></i> خصم</span>
                         @elseif($tx->record_type === 'bonus')
-                            <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success px-3"><i class="bi bi-gift me-1"></i> مكافأة</span>
+                            <span class="badge badge-success rounded-pill px-3"><i class="bi bi-gift me-1"></i> مكافأة</span>
                         @endif
                     </td>
                     <td class="text-center">
@@ -62,13 +62,13 @@
                         </span>
                     </td>
                     <td class="text-center">
-                        <span class="badge bg-light text-dark border px-3 py-1 rounded-pill">{{ $tx->date->format('Y-m-d') }}</span>
+                        <span class="badge badge-light px-3 py-1 rounded-pill">{{ $tx->date->format('Y-m-d') }}</span>
                     </td>
                     <td class="text-center">
                         @if($tx->is_deducted)
-                            <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success px-3"><i class="bi bi-check-circle me-1"></i> مُغلقة (مسددة)</span>
+                            <span class="badge badge-success rounded-pill px-3"><i class="bi bi-check-circle me-1"></i> مُغلقة (مسددة)</span>
                         @else
-                            <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary border border-secondary px-3"><i class="bi bi-clock me-1"></i> مفتوحة (جارية)</span>
+                            <span class="badge badge-secondary rounded-pill px-3"><i class="bi bi-clock me-1"></i> مفتوحة (جارية)</span>
                         @endif
                     </td>
                     <td class="text-muted fw-bold">{{ $tx->notes ?? '—' }}</td>

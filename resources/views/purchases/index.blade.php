@@ -71,11 +71,11 @@
                 </div>
             </div>
             @if($rem <= 0)
-                <span class="badge border bg-success bg-opacity-10 text-success border-success rounded-pill px-2" style="font-size:0.7rem;">
+                <span class="badge badge-success rounded-pill px-2" style="font-size:0.72rem;">
                     <i class="bi bi-check-all"></i> خالص
                 </span>
             @else
-                <span class="badge border bg-danger bg-opacity-10 text-danger border-danger rounded-pill px-2" style="font-size:0.7rem;">
+                <span class="badge badge-danger rounded-pill px-2" style="font-size:0.72rem;">
                     آجل
                 </span>
             @endif

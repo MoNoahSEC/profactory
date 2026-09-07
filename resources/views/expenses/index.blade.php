@@ -133,16 +133,16 @@
 <div class="row g-3 mb-4">
     <!-- Global Total Card -->
     <div class="col-12">
-        <div class="p-4 d-flex justify-content-between align-items-center rounded-4 shadow-lg mb-2" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; position: relative; overflow: hidden;">
+        <div class="p-3 p-md-4 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center rounded-4 shadow-lg mb-2 gap-3" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; position: relative; overflow: hidden;">
             <div style="position: absolute; right: -20px; top: -40px; font-size: 10rem; opacity: 0.03; color: white;">
                 <i class="bi bi-bank2"></i>
             </div>
             <div style="z-index: 1;">
-                <h4 class="fw-bolder mb-1 text-orange"><i class="bi bi-wallet-fill me-2"></i> إجمالي السيولة بالشركة</h4>
-                <p class="mb-0 text-light opacity-75" style="font-size: 1.1rem;">مجموع الأرصدة الحالية في جميع الحسابات والخزائن والعهد</p>
+                <h5 class="fw-bolder mb-1 text-orange"><i class="bi bi-wallet-fill me-2"></i> إجمالي السيولة بالشركة</h5>
+                <p class="mb-0 text-light opacity-75 small">مجموع الأرصدة الحالية في جميع الحسابات والخزائن والعهد</p>
             </div>
-            <div class="text-white" style="font-size: 3.2rem; font-weight: 900; letter-spacing: -1px; direction:ltr; text-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1;">
-                {{ number_format($treasuries->sum('current_balance'), 2) }} <span class="text-orange" style="font-size: 1.5rem;">ج.م</span>
+            <div class="text-white" style="font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; letter-spacing: -1px; direction:ltr; text-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1;">
+                {{ number_format($treasuries->sum('current_balance'), 2) }} <span class="text-orange" style="font-size: 1.2rem;">ج.م</span>
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@
                     <h5 class="fw-bolder mb-1">{{ $t->name }}</h5>
                     <small class="text-muted d-block fw-bold mb-2">
                         @if($t->type == 'cash') نقدية @elseif($t->type == 'bank') حساب بنكي @elseif($t->type == 'wallet') محفظة إلكترونية @else عهدة @endif
-                        @if($t->is_default) <span class="badge bg-white text-orange ms-1">الرئيسية</span> @endif
+                        @if($t->is_default) <span class="badge badge-light ms-1" style="color: #ea580c !important; border-color: #fed7aa !important;">الرئيسية</span> @endif
                     </small>
                     <div class="balance-amt">{{ number_format($t->current_balance, 2) }} <span style="font-size:1rem;">ج.م</span></div>
                 </div>

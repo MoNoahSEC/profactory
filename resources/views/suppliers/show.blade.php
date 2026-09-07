@@ -228,13 +228,13 @@
                             </div>
                             <div class="row g-2 mb-2 text-center small">
                                 <div class="col-4">
-                                    <div class="bg-light rounded p-1">إجمالي<br><span class="fw-bold">{{ number_format($pur->total_price, 2) }}</span></div>
+                                    <div class="rounded p-1" style="background: #f1f5f9; color: #0f172a;">إجمالي<br><span class="fw-bold">{{ number_format($pur->total_price, 2) }}</span></div>
                                 </div>
                                 <div class="col-4">
-                                    <div class="bg-success bg-opacity-10 text-success rounded p-1">مدفوع<br><span class="fw-bold">{{ number_format($pur->paid_amount, 2) }}</span></div>
+                                    <div class="rounded p-1" style="background: #dcfce7; color: #14532d;">مدفوع<br><span class="fw-bold">{{ number_format($pur->paid_amount, 2) }}</span></div>
                                 </div>
                                 <div class="col-4">
-                                    <div class="bg-danger bg-opacity-10 text-danger rounded p-1">متبقي<br><span class="fw-bold">{{ number_format($pur->total_price - $pur->paid_amount, 2) }}</span></div>
+                                    <div class="rounded p-1" style="background: #fee2e2; color: #991b1b;">متبقي<br><span class="fw-bold">{{ number_format($pur->total_price - $pur->paid_amount, 2) }}</span></div>
                                 </div>
                             </div>
                         </div>

@@ -511,20 +511,41 @@
     /* Mobile responsive */
     @media(max-width: 768px) {
         .whatsapp-container {
-            height: calc(100vh - 100px);
-            border-radius: 0;
-            margin: -15px -15px 0;
+            height: calc(100vh - 145px) !important;
+            height: calc(100dvh - 145px) !important;
+            min-height: auto;
+            border-radius: 14px;
+            margin: 0;
+            border: 1px solid #d1d7db;
+            overscroll-behavior: contain;
         }
         .whatsapp-sidebar {
-            width: 100%;
-            position: absolute;
+            width: 100% !important;
+            position: absolute !important;
             left: 0; top: 0; bottom: 0; right: 0;
+            z-index: 10;
         }
         .whatsapp-sidebar.hidden-mobile {
-            display: none;
+            display: none !important;
+        }
+        .whatsapp-main {
+            width: 100% !important;
+            position: absolute !important;
+            left: 0; top: 0; bottom: 0; right: 0;
+            z-index: 5;
         }
         .whatsapp-main.hidden-mobile {
-            display: none;
+            display: none !important;
+        }
+        .whatsapp-bubble {
+            max-width: 88% !important;
+        }
+        .whatsapp-messages {
+            overscroll-behavior-y: contain;
+            padding: 12px 14px;
+        }
+        .whatsapp-input-bar {
+            padding: 8px 10px;
         }
     }
 </style>
@@ -603,7 +624,7 @@
                         <div class="whatsapp-chat-title">
                             <span class="whatsapp-chat-name">
                                 {{ $u->name }}
-                                <span class="badge bg-secondary bg-opacity-10 text-muted ms-1" style="font-size: 0.68rem;">{{ $u->role_name }}</span>
+                                <span class="badge badge-secondary ms-1" style="font-size: 0.72rem;">{{ $u->role_name }}</span>
                             </span>
                             <span class="whatsapp-chat-time" id="time-{{ $u->id }}">{{ $u->last_message?->formatted_time ?? '' }}</span>
                         </div>
@@ -838,12 +859,30 @@
                     }
                 });
 
-                // Play soft chime if new incoming message received
+                // Play soft chime, vibrate, and show native notification if new incoming message received
                 if (hadNewIncoming) {
                     try {
                         const audio = document.getElementById('notifSound');
-                        if (audio) audio.play();
+                        if (audio) audio.play().catch(() => {});
                     } catch(e) {}
+
+                    if ('vibrate' in navigator) {
+                        try { navigator.vibrate([150, 80, 150]); } catch(e) {}
+                    }
+
+                    // Native browser notification if window is minimized or user is away
+                    if (window.Notification && Notification.permission === 'granted' && document.hidden) {
+                        try {
+                            const lastMsg = data.messages[data.messages.length - 1];
+                            const senderName = lastMsg?.sender?.name || 'شات الإدارة';
+                            new Notification(`💬 رسالة جديدة من ${senderName}`, {
+                                body: lastMsg?.message || '📎 أرسل ملف مرفق جديد',
+                                icon: '/icons/icon-192.png',
+                                badge: '/icons/icon-96.png',
+                                tag: 'chat-new-msg'
+                            });
+                        } catch(e) {}
+                    }
                 }
 
                 // Scroll to bottom

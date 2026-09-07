@@ -65,11 +65,11 @@
 @php 
     $statusLabels = ['draft'=>'مسودة', 'sent'=>'مُرسلة', 'paid'=>'مدفوعة', 'partial'=>'جزئي', 'overdue'=>'متأخرة']; 
     $bgColors = [
-        'draft'   => 'bg-secondary bg-opacity-10 text-secondary border-secondary',
-        'sent'    => 'bg-info bg-opacity-10 text-info border-info',
-        'paid'    => 'bg-success bg-opacity-10 text-success border-success',
-        'partial' => 'bg-warning bg-opacity-10 text-warning border-warning',
-        'overdue' => 'bg-danger bg-opacity-10 text-danger border-danger',
+        'draft'   => 'badge-secondary',
+        'sent'    => 'badge-info',
+        'paid'    => 'badge-success',
+        'partial' => 'badge-warning',
+        'overdue' => 'badge-danger',
     ];
 @endphp
 

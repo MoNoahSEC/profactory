@@ -65,7 +65,7 @@
                         {{ $order->cost ? number_format($order->cost->total_cost, 2) : '-' }} <small class="text-muted fw-normal">ج.م</small>
                     </td>
                     <td class="text-center">
-                        <span class="badge rounded-pill bg-{{ $color }} bg-opacity-10 text-{{ $color }} border border-{{ $color }} px-3 py-1">
+                        <span class="badge badge-{{ $color }} rounded-pill px-3 py-1">
                             {{ $label }}
                         </span>
                     </td>
@@ -194,7 +194,7 @@
     function openOrderModal(order, productName, label, color) {
         document.getElementById('actOrderNum').textContent = 'أمر إنتاج #' + order.order_number;
         document.getElementById('actOrderProduct').textContent = productName;
-        document.getElementById('actOrderStatus').innerHTML = `<span class="badge bg-${color} bg-opacity-10 text-${color} border border-${color} px-3 py-1 rounded-pill">${label}</span>`;
+        document.getElementById('actOrderStatus').innerHTML = `<span class="badge badge-${color} rounded-pill px-3 py-1">${label}</span>`;
         
         const completeForm = document.getElementById('completeOrderForm');
         if (order.status === 'completed') {

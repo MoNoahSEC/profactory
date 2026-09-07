@@ -148,7 +148,7 @@
                             </td>
                         @endforeach
 
-                        <td class="fw-bold text-dark bg-opacity-10 bg-secondary" style="font-size: 0.85rem; line-height: 1.5; white-space: pre-line;">{{ $row['summary_text'] }}</td>
+                        <td class="fw-bold text-dark" style="font-size: 0.85rem; line-height: 1.5; white-space: pre-line; background: #f8fafc;">{{ $row['summary_text'] }}</td>
                         @hasrole('Admin')
                         <td class="fw-bold text-success" style="background-color: rgba(25, 135, 84, 0.05);">{{ number_format($row['total_pay'], 0) }}</td>
                         <td class="fw-bold" style="background-color: rgba(220, 53, 69, 0.05);">
@@ -218,7 +218,7 @@
         <div class="modal-content glass-panel border-0 shadow-lg" style="border-radius: 16px;">
             <div class="modal-header border-bottom-0 pb-0">
                 <div class="d-flex align-items-center gap-2">
-                    <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <div class="p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background: #e0f2fe; color: #0369a1;">
                         <i class="bi bi-calendar2-check fs-5"></i>
                     </div>
                     <div>
@@ -305,18 +305,18 @@
 <!-- Pay Salary Modal -->
 <div class="modal fade" id="payModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg border-0">
-        <div class="modal-content bg-dark border border-secondary shadow-lg" style="border-radius: 20px; overflow: hidden;">
-            <div class="modal-header border-bottom border-secondary" style="background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(25, 135, 84, 0.1));">
+        <div class="modal-content bg-white border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            <div class="modal-header border-bottom border-light" style="background: linear-gradient(135deg, #fff7ed, #ffedd5); padding: 1.2rem 1.5rem;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-primary bg-opacity-25 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: #ea580c; color: #fff;">
                         <i class="bi bi-wallet2 fs-4"></i>
                     </div>
                     <div>
-                        <h4 class="modal-title fw-bold text-white mb-0" id="payModalTitle">إتمام عملية الصرف</h4>
-                        <small class="text-muted" id="pay_worker_name_sub">تأكيد تفاصيل الصرف وخصم السلف</small>
+                        <h5 class="modal-title fw-bold text-dark mb-0" id="payModalTitle">إتمام عملية الصرف</h5>
+                        <small class="text-muted fw-bold" id="pay_worker_name_sub">تأكيد تفاصيل الصرف وخصم السلف</small>
                     </div>
                 </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form action="{{ route('salaries.pay_all') }}" method="POST" id="payForm">
                 @csrf
@@ -326,31 +326,31 @@
                 <input type="hidden" name="total_pay" id="pay_total_pay">
                 <input type="hidden" name="penalties" id="pay_penalties">
                 
-                <div class="modal-body p-4 p-md-5">
+                <div class="modal-body p-3 p-md-4">
                     
-                    <div class="text-center mb-4 fade-in-up">
-                        <h3 class="fw-bold text-white mb-1" id="pay_worker_name"></h3>
-                        <div class="badge bg-secondary bg-opacity-25 text-light rounded-pill px-3 py-2 fw-normal"><i class="bi bi-calendar3 me-1"></i> عن الأسبوع المحدد</div>
+                    <div class="text-center mb-4">
+                        <h3 class="fw-bold text-dark mb-1" id="pay_worker_name"></h3>
+                        <div class="badge badge-secondary rounded-pill px-3 py-2"><i class="bi bi-calendar3 me-1"></i> عن الأسبوع المحدد</div>
                     </div>
 
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-4">
-                            <div class="glass-panel p-3 text-center h-100 border-top border-3 border-primary" style="background: rgba(13, 110, 253, 0.03);">
-                                <label class="form-label text-muted small fw-bold mb-1"><i class="bi bi-cash-stack me-1"></i> الراتب المستحق</label>
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-md-4">
+                            <div class="p-3 text-center h-100 rounded-3 border-2 border-primary" style="background: #e0f2fe; border: 1.5px solid #7dd3fc;">
+                                <label class="form-label text-primary small fw-bold mb-1"><i class="bi bi-cash-stack me-1"></i> الراتب المستحق</label>
                                 <input type="text" class="form-control bg-transparent border-0 fw-bold text-primary fs-3 text-center p-0" id="pay_display_total" readonly>
                             </div>
                         </div>
                         
-                        <div class="col-md-4">
-                            <div class="glass-panel p-3 text-center h-100 border-top border-3 border-danger" style="background: rgba(220, 53, 69, 0.03);">
-                                <label class="form-label text-muted small fw-bold mb-1"><i class="bi bi-exclamation-octagon me-1"></i> الخصومات والجزاءات</label>
+                        <div class="col-12 col-md-4">
+                            <div class="p-3 text-center h-100 rounded-3" style="background: #fee2e2; border: 1.5px solid #fca5a5;">
+                                <label class="form-label text-danger small fw-bold mb-1"><i class="bi bi-exclamation-octagon me-1"></i> الخصومات والجزاءات</label>
                                 <input type="text" class="form-control bg-transparent border-0 fw-bold text-danger fs-3 text-center p-0" id="pay_display_penalties" readonly>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="glass-panel p-3 text-center h-100 border-top border-3 border-warning" style="background: rgba(255, 193, 7, 0.03);">
-                                <label class="form-label text-muted small fw-bold mb-1"><i class="bi bi-hourglass-split me-1"></i> السلف غير المسددة</label>
+                        <div class="col-12 col-md-4">
+                            <div class="p-3 text-center h-100 rounded-3" style="background: #fef3c7; border: 1.5px solid #fde68a;">
+                                <label class="form-label text-warning small fw-bold mb-1"><i class="bi bi-hourglass-split me-1"></i> السلف غير المسددة</label>
                                 <input type="text" class="form-control bg-transparent border-0 fw-bold text-warning fs-3 text-center p-0" id="pay_display_advances" readonly>
                             </div>
                         </div>
@@ -358,17 +358,17 @@
 
                     {{-- Advances Breakdown --}}
                     <div class="col-12 mb-4" id="advances_breakdown_box" style="display:none;">
-                        <div class="glass-panel border-warning p-3">
+                        <div class="p-3 rounded-3" style="background: #fffbeb; border: 1.5px solid #fde68a;">
                             <h6 class="fw-bold text-warning mb-3 d-flex align-items-center"><i class="bi bi-journal-text me-2 fs-5"></i> تفاصيل السلف المتراكمة:</h6>
                             <div class="table-responsive">
-                                <table class="table table-sm table-borderless mb-0" id="advances_breakdown_table">
-                                    <thead class="border-bottom border-secondary">
-                                        <tr class="text-muted small"><th>التاريخ</th><th>المبلغ</th><th>ملاحظات</th></tr>
+                                <table class="table table-sm table-clean mb-0" id="advances_breakdown_table">
+                                    <thead>
+                                        <tr><th>التاريخ</th><th>المبلغ</th><th>ملاحظات</th></tr>
                                     </thead>
                                     <tbody id="advances_breakdown_tbody"></tbody>
                                     <tfoot>
-                                        <tr class="fw-bold border-top border-secondary">
-                                            <td class="text-white pt-2">إجمالي السلف</td>
+                                        <tr class="fw-bold border-top">
+                                            <td class="text-dark pt-2">إجمالي السلف</td>
                                             <td class="text-warning pt-2 fs-5" id="advances_breakdown_total"></td>
                                             <td></td>
                                         </tr>
@@ -378,42 +378,39 @@
                         </div>
                     </div>
                     
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="glass-panel p-4 h-100 position-relative" style="background: rgba(255, 193, 7, 0.05); border-color: rgba(255, 193, 7, 0.2);">
-                                <div class="position-absolute top-0 end-0 p-3 opacity-25"><i class="bi bi-scissors fs-1 text-warning"></i></div>
-                                <label class="form-label fw-bold text-warning mb-3">المبلغ المراد سداده من السلفة الآن (ج.م)</label>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-3 h-100" style="background: #fffbeb; border: 1.5px solid #fde68a;">
+                                <label class="form-label fw-bold text-warning mb-2">المبلغ المراد سداده من السلفة الآن (ج.م)</label>
                                 <div class="input-group input-group-lg shadow-sm">
-                                    <input type="number" name="advances" id="pay_deduct_advance" class="form-control fw-bold fs-4 text-center bg-dark text-white border-warning" min="0" step="1" required oninput="calculateNetPay()">
-                                    <button class="btn btn-warning fw-bold px-4" type="button" onclick="setMaxAdvance()">سداد الكل</button>
+                                    <input type="number" name="advances" id="pay_deduct_advance" class="form-control fw-bold fs-4 text-center bg-white text-dark border-warning" min="0" step="1" required oninput="calculateNetPay()">
+                                    <button class="btn btn-warning fw-bold px-3" type="button" onclick="setMaxAdvance()">سداد الكل</button>
                                 </div>
-                                <small class="text-muted mt-2 d-block"><i class="bi bi-info-circle me-1"></i> إذا سددت جزءاً، سيتم ترحيل الباقي تلقائياً.</small>
+                                <small class="text-muted mt-2 d-block fw-bold"><i class="bi bi-info-circle me-1"></i> إذا سددت جزءاً، سيتم ترحيل الباقي تلقائياً.</small>
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="glass-panel p-4 h-100 position-relative" style="background: rgba(25, 135, 84, 0.05); border-color: rgba(25, 135, 84, 0.2);">
-                                <div class="position-absolute top-0 end-0 p-3 opacity-25"><i class="bi bi-gift fs-1 text-success"></i></div>
-                                <label class="form-label fw-bold text-success mb-3">مكافأة إضافية (ج.م) <span class="badge bg-secondary bg-opacity-25 text-light ms-1 fw-normal">اختياري</span></label>
-                                <input type="number" name="bonus" id="pay_bonus" class="form-control form-control-lg fw-bold fs-4 text-center bg-dark text-success border-success shadow-sm" min="0" step="0.5" value="0" oninput="calculateNetPay()" placeholder="0">
-                                <small class="text-muted mt-2 d-block"><i class="bi bi-info-circle me-1"></i> تُضاف مباشرة إلى الصافي النهائي.</small>
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-3 h-100" style="background: #f0fdf4; border: 1.5px solid #86efac;">
+                                <label class="form-label fw-bold text-success mb-2">مكافأة إضافية (ج.م) <span class="badge badge-secondary ms-1">اختياري</span></label>
+                                <input type="number" name="bonus" id="pay_bonus" class="form-control form-control-lg fw-bold fs-4 text-center bg-white text-success border-success shadow-sm" min="0" step="0.5" value="0" oninput="calculateNetPay()" placeholder="0">
+                                <small class="text-muted mt-2 d-block fw-bold"><i class="bi bi-info-circle me-1"></i> تُضاف مباشرة إلى الصافي النهائي.</small>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-12 mt-5">
-                        <div class="p-4 rounded-4 text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(25, 135, 84, 0.15), rgba(13, 110, 253, 0.15)); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <div class="position-absolute top-50 start-50 translate-middle w-100 h-100" style="background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);"></div>
-                            <h5 class="text-white fw-bold mb-2 position-relative z-1" style="letter-spacing: 0.5px;">الصافي النهائي للاستلام النقدي</h5>
-                            <h1 class="display-3 fw-bold text-white mb-0 position-relative z-1 text-shadow-sm" id="pay_display_net" style="text-shadow: 0 4px 15px rgba(25, 135, 84, 0.4);"></h1>
+                    <div class="col-12 mt-4">
+                        <div class="p-4 rounded-4 text-center" style="background: linear-gradient(135deg, #15803d, #16a34a); box-shadow: 0 10px 25px rgba(22, 163, 74, 0.25);">
+                            <h6 class="text-white opacity-90 fw-bold mb-2">الصافي النهائي للاستلام النقدي</h6>
+                            <h1 class="display-4 fw-bold text-white mb-0" id="pay_display_net" style="letter-spacing: 1px;">0 ج.م</h1>
                             <input type="hidden" name="net_salary" id="pay_net_salary">
                         </div>
                     </div>
                 </div>
                 
-                <div class="modal-footer border-top border-secondary p-4 d-flex justify-content-between align-items-center">
-                    <button type="button" class="btn btn-outline-secondary px-5 py-2 fw-bold rounded-pill" data-bs-dismiss="modal">إلغاء التغييرات</button>
-                    <button type="submit" class="btn btn-primary px-5 py-2 fw-bold rounded-pill shadow-lg d-flex align-items-center gap-2" id="btnConfirmPay" style="background: linear-gradient(135deg, #0d6efd, #0b5ed7);">
+                <div class="modal-footer border-top p-3 d-flex justify-content-between align-items-center gap-2">
+                    <button type="button" class="btn btn-light px-4 py-2 fw-bold rounded-pill" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="btn btn-orange px-4 py-2 fw-bold rounded-pill shadow-lg d-flex align-items-center gap-2" id="btnConfirmPay">
                         <span>تأكيد واعتماد الصرف</span>
                         <i class="bi bi-check2-circle fs-5"></i>
                     </button>

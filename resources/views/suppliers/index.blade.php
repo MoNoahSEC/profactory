@@ -80,11 +80,11 @@
                 </div>
             </div>
             @if($debt > 0)
-                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger rounded-pill px-2" style="font-size:0.7rem;">عليه: {{ number_format($debt, 0) }}</span>
+                <span class="badge badge-danger rounded-pill px-2" style="font-size:0.72rem;">عليه: {{ number_format($debt, 0) }}</span>
             @elseif($debt < 0)
-                <span class="badge bg-success bg-opacity-10 text-success border border-success rounded-pill px-2" style="font-size:0.7rem;">له: {{ number_format(abs($debt), 0) }}</span>
+                <span class="badge badge-success rounded-pill px-2" style="font-size:0.72rem;">له: {{ number_format(abs($debt), 0) }}</span>
             @else
-                <span class="badge badge-muted rounded-pill px-2" style="font-size:0.7rem;">مسدد</span>
+                <span class="badge badge-secondary rounded-pill px-2" style="font-size:0.72rem;">مسدد</span>
             @endif
         </div>
         <div class="scm-body">
@@ -145,11 +145,11 @@
                     <td class="text-center">
                         @php $debt = $supplier->calculated_debt; @endphp
                         @if($debt > 0)
-                            <span class="badge rounded-pill px-3 py-1 fw-bold" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5;">{{ number_format($debt, 0) }} ج.م</span>
+                            <span class="badge badge-danger rounded-pill px-3 py-1">{{ number_format($debt, 0) }} ج.م</span>
                         @elseif($debt < 0)
-                            <span class="badge rounded-pill px-3 py-1 fw-bold" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac;">{{ number_format(abs($debt), 0) }} ج.م (لنا)</span>
+                            <span class="badge badge-success rounded-pill px-3 py-1">{{ number_format(abs($debt), 0) }} ج.م (لنا)</span>
                         @else
-                            <span class="badge badge-muted rounded-pill px-3 py-1">مسدد</span>
+                            <span class="badge badge-secondary rounded-pill px-3 py-1">مسدد</span>
                         @endif
                     </td>
                 </tr>

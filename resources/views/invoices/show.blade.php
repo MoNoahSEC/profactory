@@ -69,7 +69,7 @@
         <div class="glass-card mb-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="fw-bold mb-0"><i class="bi bi-receipt me-2 text-primary"></i>{{ $invoice->invoice_number }}</h5>
-                <span class="badge bg-{{ $invoice->status_color }} bg-opacity-25 text-{{ $invoice->status_color }} border border-{{ $invoice->status_color }} rounded-pill px-3 py-2 fs-6">
+                <span class="badge badge-{{ $invoice->status_color }} rounded-pill px-3 py-2 fs-6">
                     {{ $statusLabels[$invoice->status] ?? $invoice->status }}
                 </span>
             </div>
@@ -80,15 +80,15 @@
                         <h6 class="fw-bold text-dark mb-0 me-3">{{ $invoice->customer->name ?? '-' }}</h6>
                         @if(isset($customerBalance) && $invoice->customer)
                             @if($customerBalance > 0)
-                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger rounded-pill px-2">
+                                <span class="badge badge-danger rounded-pill px-2">
                                     عليه مستحقات: {{ number_format($customerBalance, 2) }}
                                 </span>
                             @elseif($customerBalance < 0)
-                                <span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-2">
+                                <span class="badge badge-success rounded-pill px-2">
                                     له رصيد: {{ number_format(abs($customerBalance), 2) }}
                                 </span>
                             @else
-                                <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary rounded-pill px-2">
+                                <span class="badge badge-secondary rounded-pill px-2">
                                     لا ديون مستحقة
                                 </span>
                             @endif

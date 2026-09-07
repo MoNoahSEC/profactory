@@ -42,9 +42,9 @@
                     <td>{{ $pen->date->format('Y-m-d') }}</td>
                     <td>
                         @if($pen->is_deducted)
-                            <span class="badge bg-success bg-opacity-25 text-success rounded-pill px-3">تم التطبيق/الخصم</span>
+                            <span class="badge badge-success rounded-pill px-3">تم التطبيق/الخصم</span>
                         @else
-                            <span class="badge bg-danger bg-opacity-25 text-danger rounded-pill px-3">لم يخصم بعد (قيد الانتظار)</span>
+                            <span class="badge badge-warning rounded-pill px-3">لم يخصم بعد (قيد الانتظار)</span>
                         @endif
                     </td>
                     <td class="text-muted">{{ $pen->notes ?? '-' }}</td>

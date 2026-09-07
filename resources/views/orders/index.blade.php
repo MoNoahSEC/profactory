@@ -107,26 +107,27 @@
                 </div>
 
                 <div class="row g-2 mb-2 text-center small fw-bold">
+                <div class="row g-2 mb-2 text-center small fw-bold">
                     <div class="col-4">
-                        <div class="bg-light rounded p-1">إجمالي<br><span class="text-success">{{ number_format($order->total_amount, 0) }}</span></div>
+                        <div class="bg-light rounded p-1 border">إجمالي<br><span class="text-success">{{ number_format($order->total_amount, 0) }}</span></div>
                     </div>
                     <div class="col-4">
-                        <div class="bg-warning bg-opacity-10 text-warning rounded p-1">عربون<br><span>{{ $order->paid_deposit > 0 ? number_format($order->paid_deposit, 0) : '—' }}</span></div>
+                        <div class="badge-warning rounded p-1 w-100 d-block">عربون<br><span class="text-dark">{{ $order->paid_deposit > 0 ? number_format($order->paid_deposit, 0) : '—' }}</span></div>
                     </div>
                     <div class="col-4">
-                        <div class="bg-danger bg-opacity-10 text-danger rounded p-1">متبقي<br><span class="{{ $remaining > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($remaining, 0) }}</span></div>
+                        <div class="badge-danger rounded p-1 w-100 d-block">متبقي<br><span>{{ number_format($remaining, 0) }}</span></div>
                     </div>
                 </div>
 
                 <div class="text-center mt-2 pt-2 border-top">
                     @if($order->converted_to_invoice)
-                        <span class="badge bg-info bg-opacity-25 text-info border border-info rounded-pill px-3 py-2"><i class="bi bi-file-earmark-check"></i> مفوتر</span>
+                        <span class="badge badge-info rounded-pill px-3 py-2"><i class="bi bi-file-earmark-check"></i> مفوتر</span>
                     @elseif($order->status == 'awaiting_approval')
-                        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger rounded-pill px-3 py-2"><i class="bi bi-shield-exclamation"></i> بانتظار المراجعة</span>
+                        <span class="badge badge-danger rounded-pill px-3 py-2"><i class="bi bi-shield-exclamation"></i> بانتظار المراجعة</span>
                     @elseif($order->status == 'completed')
-                        <span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-3 py-2"><i class="bi bi-check-all"></i> مكتمل</span>
+                        <span class="badge badge-success rounded-pill px-3 py-2"><i class="bi bi-check-all"></i> مكتمل</span>
                     @else
-                        <span class="badge bg-warning bg-opacity-25 text-warning border border-warning rounded-pill px-3 py-2"><i class="bi bi-clock-history"></i> جاري</span>
+                        <span class="badge badge-warning rounded-pill px-3 py-2"><i class="bi bi-clock-history"></i> جاري</span>
                     @endif
                 </div>
             </div>
@@ -205,13 +206,13 @@
                                 <td data-label="المتبقي" class="fw-bold {{ $remaining > 0 ? 'text-danger' : 'text-success' }}">{{ number_format($remaining, 0) }}</td>
                                 <td data-label="الحالة">
                                     @if($order->converted_to_invoice)
-                                        <span class="badge bg-info bg-opacity-25 text-info border border-info rounded-pill px-2 py-1"><i class="bi bi-file-earmark-check"></i> مفوتر</span>
+                                        <span class="badge badge-info rounded-pill px-2 py-1"><i class="bi bi-file-earmark-check"></i> مفوتر</span>
                                     @elseif($order->status == 'awaiting_approval')
-                                        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger rounded-pill px-2 py-1"><i class="bi bi-shield-exclamation"></i> بانتظار المراجعة</span>
+                                        <span class="badge badge-danger rounded-pill px-2 py-1"><i class="bi bi-shield-exclamation"></i> بانتظار المراجعة</span>
                                     @elseif($order->status == 'completed')
-                                        <span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-2 py-1"><i class="bi bi-check-all"></i> مكتمل</span>
+                                        <span class="badge badge-success rounded-pill px-2 py-1"><i class="bi bi-check-all"></i> مكتمل</span>
                                     @else
-                                        <span class="badge bg-warning bg-opacity-25 text-warning border border-warning rounded-pill px-2 py-1"><i class="bi bi-clock-history"></i> جاري</span>
+                                        <span class="badge badge-warning rounded-pill px-2 py-1"><i class="bi bi-clock-history"></i> جاري</span>
                                     @endif
                                 </td>
                             </tr>
