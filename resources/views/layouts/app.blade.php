@@ -327,35 +327,45 @@
         }
 
         /* ── Stat Cards ── */
+        /* ── Stat Cards Design System ── */
         .stat-card {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            padding: 0.85rem 1.1rem;
             transition: all .25s ease;
             position: relative;
             overflow: hidden;
-            min-height: 70px;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         .stat-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 6px 16px rgba(234,88,12,.12);
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
-        .stat-card h6, .stat-card p.small, .stat-card div.small {
-            font-size: 0.82rem !important;
-            margin-bottom: 0.2rem !important;
+        .stat-card .stat-label, .stat-card p, .stat-card h6, .stat-card div.small {
+            font-size: 0.84rem !important;
+            margin-bottom: 0.25rem !important;
             font-weight: 800 !important;
             color: #475569 !important;
             z-index: 2;
             position: relative;
         }
+        .stat-card .stat-amount {
+            font-size: 1.35rem !important;
+            font-weight: 900 !important;
+            color: var(--primary) !important;
+            direction: ltr;
+            text-align: right;
+            margin-bottom: 0;
+            z-index: 2;
+            position: relative;
+        }
         .stat-card .stat-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary);
             opacity: .12;
             position: absolute;
@@ -363,20 +373,54 @@
             left: 6px;
             z-index: 1;
         }
-        .stat-card .stat-amount {
-            font-size: 1.25rem;
-            font-weight: 900;
-            color: var(--primary);
-            direction: ltr;
-            text-align: right;
-            margin-bottom: 0;
-            z-index: 2;
-            position: relative;
+
+        .stat-card.stat-primary {
+            background: #fff7ed !important;
+            border-color: #fdba74 !important;
         }
-        .stat-card.stat-danger  { border-color: #fecaca; }
-        .stat-card.stat-danger .stat-amount { color: #dc2626; }
-        .stat-card.stat-success { border-color: #bbf7d0; }
-        .stat-card.stat-success .stat-amount { color: #16a34a; }
+        .stat-card.stat-primary .stat-label, .stat-card.stat-primary p, .stat-card.stat-primary h6 { color: #9a3412 !important; }
+        .stat-card.stat-primary .stat-amount { color: #ea580c !important; }
+        .stat-card.stat-primary .stat-icon { color: #ea580c !important; opacity: .2 !important; }
+
+        .stat-card.stat-warning {
+            background: #fefce8 !important;
+            border-color: #fde047 !important;
+        }
+        .stat-card.stat-warning .stat-label, .stat-card.stat-warning p, .stat-card.stat-warning h6 { color: #854d0e !important; }
+        .stat-card.stat-warning .stat-amount { color: #ca8a04 !important; }
+        .stat-card.stat-warning .stat-icon { color: #ca8a04 !important; opacity: .2 !important; }
+
+        .stat-card.stat-success {
+            background: #f0fdf4 !important;
+            border-color: #86efac !important;
+        }
+        .stat-card.stat-success .stat-label, .stat-card.stat-success p, .stat-card.stat-success h6 { color: #166534 !important; }
+        .stat-card.stat-success .stat-amount { color: #16a34a !important; }
+        .stat-card.stat-success .stat-icon { color: #16a34a !important; opacity: .2 !important; }
+
+        .stat-card.stat-info {
+            background: #f0f9ff !important;
+            border-color: #7dd3fc !important;
+        }
+        .stat-card.stat-info .stat-label, .stat-card.stat-info p, .stat-card.stat-info h6 { color: #075985 !important; }
+        .stat-card.stat-info .stat-amount { color: #0284c7 !important; }
+        .stat-card.stat-info .stat-icon { color: #0284c7 !important; opacity: .2 !important; }
+
+        .stat-card.stat-danger {
+            background: #fef2f2 !important;
+            border-color: #fca5a5 !important;
+        }
+        .stat-card.stat-danger .stat-label, .stat-card.stat-danger p, .stat-card.stat-danger h6 { color: #991b1b !important; }
+        .stat-card.stat-danger .stat-amount { color: #dc2626 !important; }
+        .stat-card.stat-danger .stat-icon { color: #dc2626 !important; opacity: .2 !important; }
+
+        .stat-card.stat-dark {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+            border-color: #475569 !important;
+        }
+        .stat-card.stat-dark .stat-label, .stat-card.stat-dark p, .stat-card.stat-dark h6 { color: #f8fafc !important; }
+        .stat-card.stat-dark .stat-amount { color: #fb923c !important; }
+        .stat-card.stat-dark .stat-icon { color: #ffffff !important; opacity: .2 !important; }
 
         /* ── Page Header Card ── */
         .page-header-card {
@@ -510,65 +554,79 @@
                 max-width: 100vw !important;
             }
 
+            /* Mobile Glass Cards & Content Cards */
+            .glass-card, .content-card {
+                background: #ffffff !important;
+                border: 1.5px solid #e2e8f0 !important;
+                border-radius: 16px !important;
+                box-shadow: 0 4px 14px rgba(0,0,0,0.03) !important;
+                padding: 1rem !important;
+                margin-bottom: 0.85rem !important;
+            }
+
             /* Responsive Stat Cards: Clean 2-column or 3-column wrap */
             .stat-card {
-                padding: 0.5rem 0.65rem !important;
-                min-height: 60px !important;
-                border-radius: 12px !important;
+                padding: 0.65rem 0.85rem !important;
+                min-height: 72px !important;
+                border-radius: 14px !important;
             }
             .stat-card .stat-amount {
-                font-size: 1.05rem !important;
+                font-size: 1.15rem !important;
             }
             .stat-card .stat-icon {
-                font-size: 1.5rem !important;
+                font-size: 1.6rem !important;
                 bottom: -3px;
                 left: 2px;
             }
-            .stat-card h6, .stat-card p.small, .stat-card div.small {
-                font-size: 0.74rem !important;
+            .stat-card .stat-label, .stat-card p, .stat-card h6, .stat-card div.small {
+                font-size: 0.76rem !important;
+                line-height: 1.25 !important;
             }
 
             /* Page Header Card on Mobile: Title + Full Width Buttons */
             .page-header-card {
-                padding: 0.8rem 1rem !important;
-                margin-bottom: 0.65rem !important;
-                border-radius: 14px !important;
+                padding: 0.85rem 1rem !important;
+                margin-bottom: 0.75rem !important;
+                border-radius: 16px !important;
                 display: flex !important;
                 flex-direction: column !important;
                 gap: 0.6rem !important;
+                background: #ffffff !important;
+                border: 1.5px solid #e2e8f0 !important;
             }
             .page-header-card h4, .page-header-card h5, .page-header-card .page-title {
-                font-size: 1.05rem !important;
+                font-size: 1.1rem !important;
                 font-weight: 900 !important;
                 margin-bottom: 0 !important;
+                color: #0f172a !important;
             }
             .page-header-card .btn, .page-header-card a.btn {
                 min-height: 44px !important;
                 display: inline-flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                font-size: 0.9rem !important;
+                font-size: 0.92rem !important;
                 font-weight: 800 !important;
-                padding: 0.55rem 0.9rem !important;
+                padding: 0.6rem 1rem !important;
                 border-radius: 12px !important;
             }
 
             /* Tables: Smooth Touch Scroll */
             .table-responsive {
-                border-radius: 12px !important;
+                border-radius: 14px !important;
                 -webkit-overflow-scrolling: touch;
-                border: 1px solid #e2e8f0;
+                border: 1.5px solid #e2e8f0 !important;
                 background: #ffffff;
                 margin-bottom: 0.75rem;
             }
             .table-clean th {
-                font-size: 0.8rem !important;
-                padding: 0.65rem 0.65rem !important;
+                font-size: 0.82rem !important;
+                padding: 0.75rem 0.8rem !important;
                 white-space: nowrap;
             }
             .table-clean td {
-                font-size: 0.84rem !important;
-                padding: 0.7rem 0.65rem !important;
+                font-size: 0.86rem !important;
+                padding: 0.75rem 0.8rem !important;
             }
 
             /* Inputs on Mobile */

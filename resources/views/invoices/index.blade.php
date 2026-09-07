@@ -23,31 +23,31 @@
 {{-- Stats Row --}}
 <div class="row g-2 mb-3">
     <div class="col-6 col-md-3">
-        <div class="stat-card">
-            <i class="bi bi-graph-up stat-icon text-muted"></i>
-            <p class="text-muted small fw-bold mb-1">المبيعات</p>
-            <div class="stat-amount">{{ number_format($stats['total_sales'], 0) }}</div>
+        <div class="stat-card stat-primary">
+            <i class="bi bi-graph-up stat-icon"></i>
+            <span class="stat-label">المبيعات</span>
+            <div class="stat-amount">{{ number_format($stats['total_sales'], 0) }} <small style="font-size:0.75rem;">ج.م</small></div>
         </div>
     </div>
     <div class="col-6 col-md-3">
         <div class="stat-card stat-success">
-            <i class="bi bi-cash-stack stat-icon text-success opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">المُحصَّل</p>
-            <div class="stat-amount text-success">{{ number_format($stats['collected'], 0) }}</div>
+            <i class="bi bi-cash-stack stat-icon"></i>
+            <span class="stat-label">المُحصَّل</span>
+            <div class="stat-amount">{{ number_format($stats['collected'], 0) }} <small style="font-size:0.75rem;">ج.م</small></div>
         </div>
     </div>
     <div class="col-6 col-md-3">
         <div class="stat-card stat-danger">
-            <i class="bi bi-exclamation-circle stat-icon text-danger opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">ديون</p>
-            <div class="stat-amount text-danger">{{ number_format($stats['remaining'], 0) }}</div>
+            <i class="bi bi-exclamation-circle stat-icon"></i>
+            <span class="stat-label">ديون مستحقة</span>
+            <div class="stat-amount">{{ number_format($stats['remaining'], 0) }} <small style="font-size:0.75rem;">ج.م</small></div>
         </div>
     </div>
     <div class="col-6 col-md-3">
-        <div class="stat-card">
-            <i class="bi bi-calendar-check stat-icon text-primary opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">الشهر الحالي</p>
-            <div class="stat-amount text-primary">{{ number_format($stats['this_month'], 0) }}</div>
+        <div class="stat-card stat-info">
+            <i class="bi bi-calendar-check stat-icon"></i>
+            <span class="stat-label">الشهر الحالي</span>
+            <div class="stat-amount">{{ number_format($stats['this_month'], 0) }} <small style="font-size:0.75rem;">ج.م</small></div>
         </div>
     </div>
 </div>

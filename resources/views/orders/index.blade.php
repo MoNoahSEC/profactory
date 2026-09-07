@@ -20,33 +20,33 @@
 <div class="row g-2 mb-4">
     <!-- Global Total Card -->
     <div class="col-6 col-lg-3">
-        <div class="stat-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-color: #334155;">
-            <i class="bi bi-wallet2 stat-icon text-white opacity-25"></i>
-            <p class="text-white opacity-75 small fw-bold mb-1">إجمالي الطلبيات النشطة</p>
-            <div class="stat-amount text-white">{{ number_format($stats['total_active_amount'], 0) }}</div>
+        <div class="stat-card stat-primary">
+            <i class="bi bi-wallet2 stat-icon"></i>
+            <span class="stat-label">إجمالي الطلبيات النشطة</span>
+            <div class="stat-amount">{{ number_format($stats['total_active_amount'], 0) }} <small style="font-size:0.75rem;">ج.م</small></div>
         </div>
     </div>
 
     <!-- Stats Cards -->
     <div class="col-6 col-lg-3">
         <div class="stat-card stat-warning">
-            <i class="bi bi-clock-history stat-icon text-warning opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">طلبيات قيد التنفيذ</p>
-            <div class="stat-amount text-warning">{{ $stats['pending_count'] }}</div>
+            <i class="bi bi-clock-history stat-icon"></i>
+            <span class="stat-label">طلبيات قيد التنفيذ</span>
+            <div class="stat-amount">{{ $stats['pending_count'] }}</div>
         </div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="stat-card stat-success">
-            <i class="bi bi-check-all stat-icon text-success opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">مكتملة (غير مفوترة)</p>
-            <div class="stat-amount text-success">{{ $stats['completed_count'] }}</div>
+            <i class="bi bi-check-all stat-icon"></i>
+            <span class="stat-label">مكتملة (غير مفوترة)</span>
+            <div class="stat-amount">{{ $stats['completed_count'] }}</div>
         </div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="stat-card stat-info">
-            <i class="bi bi-file-earmark-check stat-icon text-info opacity-50"></i>
-            <p class="text-muted small fw-bold mb-1">محولة لفواتير</p>
-            <div class="stat-amount text-info">{{ $stats['converted_count'] }}</div>
+            <i class="bi bi-file-earmark-check stat-icon"></i>
+            <span class="stat-label">محولة لفواتير</span>
+            <div class="stat-amount">{{ $stats['converted_count'] }}</div>
         </div>
     </div>
 </div>
@@ -132,7 +132,16 @@
                 </div>
             </div>
         @empty
-            <div class="text-center py-4 text-muted fw-bold border rounded-3 bg-light">لا توجد طلبيات مسجلة حالياً.</div>
+            <div class="text-center py-5 my-2 border rounded-4 bg-light">
+                <div class="rounded-circle bg-orange-soft d-inline-flex align-items-center justify-content-center mb-2" style="width: 56px; height: 56px;">
+                    <i class="bi bi-cart-x text-orange fs-2"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">لا توجد طلبيات مسجلة حالياً</h6>
+                <p class="text-muted small mb-3">يمكنك تسجيل أول طلبية بسهولة</p>
+                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-orange rounded-pill px-4">
+                    <i class="bi bi-plus-lg me-1"></i> طلبية جديدة
+                </a>
+            </div>
         @endforelse
     </div>
 
@@ -218,7 +227,16 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-muted py-4">لا توجد طلبيات مسجلة حالياً.</td>
+                                <td colspan="8" class="text-center py-5">
+                                    <div class="rounded-circle bg-orange-soft d-inline-flex align-items-center justify-content-center mb-2" style="width: 56px; height: 56px;">
+                                        <i class="bi bi-cart-x text-orange fs-2"></i>
+                                    </div>
+                                    <h6 class="fw-bold text-dark mb-1">لا توجد طلبيات مسجلة حالياً</h6>
+                                    <p class="text-muted small mb-3">يمكنك تسجيل أول طلبية بسهولة عبر زر طلبية جديدة</p>
+                                    <a href="{{ route('orders.create') }}" class="btn btn-sm btn-orange rounded-pill px-4">
+                                        <i class="bi bi-plus-lg me-1"></i> طلبية جديدة
+                                    </a>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -82,17 +82,17 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="stat-card bg-orange border-0">
-                <i class="bi bi-calculator stat-icon text-white opacity-25"></i>
-                <div class="text-white-50 fw-bold mb-1 small">الوضع المالي الكلي (الصافي)</div>
-                <div class="stat-amount text-white">
-                    {{ number_format(abs($netBalance), 2) }} ج.م
+            <div class="stat-card stat-primary">
+                <i class="bi bi-calculator stat-icon"></i>
+                <div class="stat-label">الوضع المالي الكلي (الصافي)</div>
+                <div class="stat-amount">
+                    {{ number_format(abs($netBalance), 2) }} <small style="font-size:0.8rem;">ج.م</small>
                 </div>
                 <div class="mt-1 small fw-bold">
                     @if($netBalance >= 0)
-                        <span class="badge bg-white text-danger"><i class="bi bi-arrow-down-right"></i> إجمالي المديونية للمورد</span>
+                        <span class="badge badge-danger"><i class="bi bi-arrow-down-right"></i> إجمالي المديونية للمورد</span>
                     @else
-                        <span class="badge bg-white text-success"><i class="bi bi-arrow-up-right"></i> رصيد دائن لنا عند المورد</span>
+                        <span class="badge badge-success"><i class="bi bi-arrow-up-right"></i> رصيد دائن لنا عند المورد</span>
                     @endif
                 </div>
             </div>

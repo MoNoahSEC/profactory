@@ -81,19 +81,19 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="stat-card bg-orange border-0">
-                <i class="bi bi-wallet2 stat-icon text-white opacity-25"></i>
-                <div class="text-white-50 fw-bold mb-1 small">الرصيد النهائي (الصافي)</div>
-                <div class="stat-amount text-white">
-                    {{ number_format(abs($netBalance), 2) }} ج.م
+            <div class="stat-card stat-primary">
+                <i class="bi bi-wallet2 stat-icon"></i>
+                <div class="stat-label">الرصيد النهائي (الصافي)</div>
+                <div class="stat-amount">
+                    {{ number_format(abs($netBalance), 2) }} <small style="font-size:0.8rem;">ج.م</small>
                 </div>
                 <div class="mt-1 small fw-bold">
                     @if($netBalance > 0)
-                        <span class="badge bg-white text-danger"><i class="bi bi-arrow-down-right"></i> مديون لنا</span>
+                        <span class="badge badge-danger"><i class="bi bi-arrow-down-right"></i> مديون لنا</span>
                     @elseif($netBalance < 0)
-                        <span class="badge bg-white text-success"><i class="bi bi-arrow-up-right"></i> له عندنا</span>
+                        <span class="badge badge-success"><i class="bi bi-arrow-up-right"></i> له عندنا</span>
                     @else
-                        <span class="badge bg-white text-dark"><i class="bi bi-check2-all"></i> مسفر تماماً</span>
+                        <span class="badge badge-secondary"><i class="bi bi-check2-all"></i> مسفر تماماً</span>
                     @endif
                 </div>
             </div>
