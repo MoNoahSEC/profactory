@@ -1,4 +1,7 @@
-FROM php:8.2-cli-alpine
+FROM php:8.4-cli-alpine
+
+# Environment variables
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Install composer and official extension installer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
