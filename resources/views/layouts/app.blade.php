@@ -68,6 +68,82 @@
             box-sizing: border-box;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .logo-circle {
+            width: 48px !important;
+            height: 48px !important;
+            min-width: 48px !important;
+            border-radius: 50% !important;
+            overflow: hidden !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #ffffff !important;
+            flex-shrink: 0 !important;
+            border: 1px solid #e2e8f0;
+        }
+        .logo-circle img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+        }
+
+        /* ── Desktop Layout Rules (> 992px) ── */
+        @media (min-width: 993px) {
+            .sidebar {
+                width: 280px !important;
+                position: fixed !important;
+                top: 1rem !important;
+                bottom: 1rem !important;
+                right: 1rem !important;
+                z-index: 1000 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                transform: none !important;
+            }
+            .main-content {
+                margin-right: calc(280px + 2rem) !important;
+                margin-left: 0 !important;
+                padding: 1rem 1.5rem !important;
+                min-height: 100vh !important;
+                width: calc(100% - 280px - 2rem) !important;
+                max-width: calc(100% - 280px - 2rem) !important;
+            }
+            .bottom-nav {
+                display: none !important;
+            }
+        }
+
+        /* ── Mobile/Tablet Layout Rules (<= 992px) ── */
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                right: 0 !important;
+                width: 280px !important;
+                z-index: 1060 !important;
+                transform: translateX(100%) !important;
+                transition: transform 0.3s ease !important;
+            }
+            .sidebar.show {
+                transform: translateX(0) !important;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.15) !important;
+            }
+            .main-content {
+                margin-right: 0 !important;
+                margin-left: 0 !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+            }
+        }
+
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
@@ -609,8 +685,8 @@
             <a href="{{ url('/') }}" class="text-decoration-none">
                 <div class="d-flex align-items-center justify-content-center gap-2">
                     <div class="brand-icon p-0 border-0 bg-transparent">
-                        <div class="logo-circle shadow-sm" style="width: 70px; height: 70px;">
-                            <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                        <div class="logo-circle shadow-sm">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo" width="48" height="48">
                         </div>
                     </div>
                     <div class="text-start">
@@ -744,8 +820,8 @@
                     <button class="btn btn-sm btn-glass-secondary d-lg-none" @click="sidebarOpen = !sidebarOpen">
                         <i class="bi bi-list fs-5"></i>
                     </button>
-                    <div class="logo-circle shadow-sm d-lg-none" style="width: 50px; height: 50px;">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                    <div class="logo-circle shadow-sm d-lg-none">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" width="40" height="40">
                     </div>
                 </div>
                 <div>
