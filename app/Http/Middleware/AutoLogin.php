@@ -15,6 +15,12 @@ class AutoLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Automatic authentication is useful for a disposable local demo only.
+        // It must never bypass authentication in tests, staging, or production.
+        if (app()->environment('testing') || !config('factory.auto_login', false)) {
+            return $next($request);
+        }
+
         if (!Auth::check()) {
             try {
                 if (\Illuminate\Support\Facades\Schema::hasTable('users')) {

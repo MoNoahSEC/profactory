@@ -15,7 +15,9 @@ class InvoiceAccountingService
     {
         $total = round((float) $invoice->total_amount, 2);
         $paid = round((float) $invoice->paid_amount, 2);
-        $remaining = max(0, round($total - $paid, 2));
+        // max() returns an int when the value is zero. Keep the public contract
+        // stable because callers use this value in monetary calculations.
+        $remaining = (float) max(0, round($total - $paid, 2));
 
         $status = 'draft';
         if ($paid >= $total && $total > 0) {

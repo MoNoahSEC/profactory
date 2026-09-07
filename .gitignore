@@ -24,3 +24,5 @@ composer.phar
 /storage/framework/views/*.php
 /storage/framework/cache/data/*
 /storage/framework/sessions/*
+/database/*.sqlite-shm
+/database/*.sqlite-wal

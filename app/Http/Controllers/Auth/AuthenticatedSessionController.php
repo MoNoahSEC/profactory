@@ -12,20 +12,11 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view or auto-redirect to dashboard.
+     * Display the login form. Authentication is always an explicit user action.
      */
-    public function create(): RedirectResponse
+    public function create(): View
     {
-        if (!Auth::check()) {
-            $user = \App\Models\User::whereHas('roles', function ($q) {
-                $q->where('name', 'Admin');
-            })->first() ?? \App\Models\User::first();
-
-            if ($user) {
-                Auth::login($user, true);
-            }
-        }
-        return redirect()->route('dashboard');
+        return view('auth.login');
     }
 
     /**

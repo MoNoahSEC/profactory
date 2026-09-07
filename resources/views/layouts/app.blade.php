@@ -44,8 +44,8 @@
     
     <!-- Local Fonts -->
     <link rel="stylesheet" href="{{ asset('libs/css/tajawal.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-DzSsQL3u.css') }}">
-    <script src="{{ asset('build/assets/app-BBPB1kKK.js') }}" defer></script>
+    {{-- Vite keeps the source styles and JavaScript in sync with the production build. --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('libs/js/turbo.js') }}"></script>
 
     @stack('styles')
@@ -734,6 +734,8 @@
             }
         }
     </style>
+    {{-- Loaded last deliberately: this is the single visual system shared by every screen. --}}
+    <link rel="stylesheet" href="{{ asset('css/profactory-ui.css') }}">
 </head>
 <body x-data="appShell()" @keydown.window="handleKeydown($event)">
 

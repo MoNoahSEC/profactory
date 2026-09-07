@@ -25,13 +25,12 @@ return Application::configure(basePath: dirname(__DIR__))
                      \Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO |
                      \Illuminate\Http\Request::HEADER_X_FORWARDED_AWS_ELB
         );
-        $middleware->validateCsrfTokens(except: [
-            '*', // تعطيل CSRF لمنع أخطاء 419 وراء الـ tunnel
-        ]);
+        // Keep CSRF protection enabled. Tunnels and reverse proxies do not
+        // require disabling it; forms and AJAX requests already carry a token.
         $middleware->append(\App\Http\Middleware\AutoLogin::class);
         $middleware->append(\App\Http\Middleware\GzipMiddleware::class);
-        $middleware->redirectGuestsTo(fn () => route('dashboard'));
-        $middleware->redirectUsersTo('/');
+        $middleware->redirectGuestsTo(fn () => route('login'));
+        $middleware->redirectUsersTo(fn () => route('dashboard'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, \Illuminate\Http\Request $request) {

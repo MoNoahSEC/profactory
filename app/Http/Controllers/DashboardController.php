@@ -9,6 +9,7 @@ use App\Models\RawMaterial;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use App\Services\CashLedgerService;
 
 class DashboardController extends Controller
@@ -35,7 +36,9 @@ class DashboardController extends Controller
                 ->sum('total_amount');
 
             // 2. المنتجات في المخزن
-            $totalProductsInStock = Inventory::sum('current_stock');
+            // Do not present a negative stock total as an available quantity.
+            // Negative rows remain visible in inventory so they can be corrected.
+            $totalProductsInStock = Inventory::sum(DB::raw('MAX(current_stock, 0)'));
 
             // 3. أوامر الإنتاج الجارية
             $pendingOrdersCount = \App\Models\Order::whereIn('status', ['pending', 'in_progress', 'awaiting_approval'])

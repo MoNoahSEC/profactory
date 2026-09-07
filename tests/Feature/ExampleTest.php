@@ -18,10 +18,10 @@ class ExampleTest extends TestCase
         $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_guest_can_access_dashboard_automatically(): void
+    public function test_guest_is_redirected_to_login_when_opening_dashboard(): void
     {
         $response = $this->get('/dashboard');
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('login'));
     }
 }
