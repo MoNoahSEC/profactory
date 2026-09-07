@@ -1,23 +1,21 @@
 FROM php:8.2-cli-alpine
 
-# Install system dependencies and PHP extensions
+# Install composer and official extension installer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+# Install system dependencies
 RUN apk add --no-cache \
     git \
     curl \
-    libpng-dev \
-    libxml2-dev \
     zip \
     unzip \
+    sqlite \
     sqlite-dev \
-    libzip-dev \
-    freetype-dev \
-    libjpeg-turbo-dev
+    bash
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_sqlite mbstring zip bcmath gd opcache
-
-# Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Install PHP extensions reliably without compilation errors
+RUN install-php-extensions gd pdo_sqlite mbstring zip bcmath opcache
 
 # Set working directory
 WORKDIR /var/www/html
@@ -25,19 +23,26 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Set permissions
-RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs storage/backups database \
+# Fix CRLF line endings for Linux containers
+RUN sed -i 's/\r$//' docker-entrypoint.sh && chmod +x docker-entrypoint.sh
+
+# Set directory permissions
+RUN mkdir -p storage/framework/cache/data \
+             storage/framework/sessions \
+             storage/framework/views \
+             storage/logs \
+             storage/backups \
+             storage/app/public \
+             bootstrap/cache \
+             database \
     && touch database/database.sqlite \
     && chmod -R 777 storage bootstrap/cache database
 
-# Install dependencies (production)
+# Install Composer dependencies (production)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Expose Render Port (Render supplies $PORT dynamically)
+# Expose port (Host dynamically supplies $PORT)
 ENV PORT=10000
 EXPOSE 10000
-
-# Copy entrypoint script
-RUN chmod +x docker-entrypoint.sh
 
 CMD ["/var/www/html/docker-entrypoint.sh"]

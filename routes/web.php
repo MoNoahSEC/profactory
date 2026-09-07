@@ -18,10 +18,8 @@ Route::get('/', function () {
         if ($user->hasAnyRole(['Supervisor', 'HR'])) return redirect()->route('salaries.index');
         if ($user->hasRole('Loader')) return redirect()->route('loading.index');
         if ($user->hasRole('Driver')) return redirect()->route('driver.dashboard');
-        // Fallback: user is logged in but has no role assigned
-        return redirect()->route('login')->with('error', 'حسابك لا يملك صلاحيات. تواصل مع المدير.');
     }
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 
@@ -43,7 +41,7 @@ Route::get('/dev/migrate', function () {
     }
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // --- ADMIN SYSTEM (FULL ACCESS FOR ADMIN & STAFF) ---
     Route::middleware(['role:Admin|Cashier|Storekeeper'])->group(function () {

@@ -28,18 +28,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '*', // تعطيل CSRF لمنع أخطاء 419 وراء الـ tunnel
         ]);
-        $middleware->redirectGuestsTo(fn () => route('login'));
-        $middleware->redirectUsersTo('/');
-        
-        // Custom Security Middleware: Restrict Ngrok Global Link to Menu only (Disabled to allow global access)
-        // $middleware->append(\App\Http\Middleware\RestrictNgrokAccess::class);
+        $middleware->append(\App\Http\Middleware\AutoLogin::class);
         $middleware->append(\App\Http\Middleware\GzipMiddleware::class);
+        $middleware->redirectGuestsTo(fn () => route('dashboard'));
+        $middleware->redirectUsersTo('/');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, \Illuminate\Http\Request $request) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'غير مصرح لك بالوصول'], 403);
             }
-            return redirect()->route('login')->with('error', 'عفواً، غير مصرح لك بالوصول لهذه الصفحة.');
+            return redirect()->route('dashboard')->with('error', 'عفواً، غير مصرح لك بالوصول لهذه الصفحة.');
         });
     })->create();

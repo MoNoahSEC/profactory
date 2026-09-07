@@ -20,3 +20,7 @@ cf.exe
 composer.phar
 *.log
 %~dp0*
+/bootstrap/cache/*.php
+/storage/framework/views/*.php
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
